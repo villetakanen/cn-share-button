@@ -43,17 +43,44 @@ export class CnShareButton extends LitElement {
   </g>
   </svg>`
 
-  private handleClicked() {
+  /**
+   * Handles the click event on the button.
+   * 
+   * If the browser supports the Web Share API, it will open the share dialog, 
+   * otherwise it will copy the current URL to the clipboard.
+   * 
+   * After success, the method emits a `copy` or `share` as event depending
+   * on the action taken.
+   */
+  private async handleClicked() {
     console.log('share button clicked')
-    navigator.share({
-      title: document.title,
-      url: window.location.href,
-    })
+    console.log('navigator.share', navigator.share)
+
+    // Check if the Web Share API is supported by the browser, if so, use it
+    if (typeof navigator.share !== 'undefined') {
+      await navigator.share({
+        title: document.title,
+        url: window.location.href,
+      })
+      this.dispatchEvent(new Event('share'))
+      console.log('Shared successfully')
+      return
+    }
+
+    // Otherwise, fallback to the Clipboard API
+    const text = window.location.href
+    await navigator.clipboard.writeText(text)
+    console.log('Copied to clipboard:', text)
+    this.dispatchEvent(new Event('copy'))
   }
 
   connectedCallback(): void {
     super.connectedCallback()
-    //this.addEventListener('click', this.handleClicked)
+    this.addEventListener('click', this.handleClicked)
+
+    // Add aria role button
+    if (!this.hasAttribute('role'))
+      this.setAttribute('role', 'button')
   }
 
   render() {
@@ -62,15 +89,15 @@ export class CnShareButton extends LitElement {
       : html`${this.defaultIcon}`
 
     return this.label
-      ? html`<button @click=${this.handleClicked}>${this.label}</button>`
-      : icon
+      ? html`${this.label}`
+      : html`${icon}`
   }
 
   static styles = css`
     :host {
       display: inline-block;
-      width: 1em;
       height: 1em;
+      width: 1em;
     }
     :host svg,
     :host img {

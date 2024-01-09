@@ -45,10 +45,10 @@ export class CnShareButton extends LitElement {
 
   /**
    * Handles the click event on the button.
-   * 
-   * If the browser supports the Web Share API, it will open the share dialog, 
+   *
+   * If the browser supports the Web Share API, it will open the share dialog,
    * otherwise it will copy the current URL to the clipboard.
-   * 
+   *
    * After success, the method emits a `copy` or `share` as event depending
    * on the action taken.
    */
@@ -79,8 +79,7 @@ export class CnShareButton extends LitElement {
     this.addEventListener('click', this.handleClicked)
 
     // Add aria role button
-    if (!this.hasAttribute('role'))
-      this.setAttribute('role', 'button')
+    if (!this.hasAttribute('role')) this.setAttribute('role', 'button')
   }
 
   render() {
@@ -88,9 +87,7 @@ export class CnShareButton extends LitElement {
       ? html`<img src="${this.src}" alt="${this.ariaLabel}" />`
       : html`${this.defaultIcon}`
 
-    return this.label
-      ? html`${this.label}`
-      : html`${icon}`
+    return this.label ? html`${this.label}` : html`${icon}`
   }
 
   static styles = css`

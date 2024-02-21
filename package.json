@@ -1,8 +1,14 @@
 {
-  "name": "cn-share-button",
+  "name": "@11thdeg/cn-share-button",
   "private": "false",
-  "version": "0.0.1-alpha.0",
-  "type": "module",
+  "version": "0.0.1-alpha.1",
+  "description": "A lightweight web component library for Pelilauta, Cinis etc. projects",
+  "main": "./dist/cn-share-button.umd.cjs",
+  "module": "./dist/cn-share-button.js",
+  "types": "./dist/cn-share-button.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -15,6 +21,7 @@
   "devDependencies": {
     "@biomejs/biome": "1.4.1",
     "typescript": "^5.2.2",
-    "vite": "^5.0.8"
+    "vite": "^5.0.8",
+    "vite-plugin-dts": "^3.7.3"
   }
 }
